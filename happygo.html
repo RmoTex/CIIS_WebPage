@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>CIIS 今晚誰當家</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="assets/js/balll.js"></script>
+    <script type="text/javascript" src="assets/js/dhtml.ball.js"></script>
+
+    <script>
+<!--取得textarea string行數-->
+var text;   
+var lines;
+var count;
+<!--準備開始抽籤 把球丟進框架-->
+var standby = false;
+function StartLot(){
+  document.getElementById("run").value = "真的能跑呢 <3";
+  var ballnum = 13;//參加人數的多寡改這個參數
+  if(ballnum>0){
+    standby = true;
+    _dhtmlTest.start(ballnum);
+  }
+  else
+    alert("好像有BUG?");
+}
+<!--清空框架和簽的數量-->
+function ClearLot(){
+  document.getElementById("run").value = "這程式跑得起來嗎？";
+  standby=false;
+  GOGO=false;
+  HadBeenPull = -1;
+}
+
+<!--使用者點擊抽籤 先確認框架內是否已經準備好簽 也檢查是否已抽光-->
+function CheckPullOut(){
+  if(HadBeenPull+1>=lines.length)
+    alert("抽光了!!");
+  else if(standby==true&&GOGO==false)
+    PullOut();
+  else if(GOGO==true)
+    alert("正在抽了別急!!");
+  else
+    alert("請先點擊「GO!」讓籤筒運轉!!");
+}
+
+    </script>
+     <style type="text/css">
+    body{
+     display: block;
+     width: 100%;
+     height: 100px;
+     background-image: url("./assets/ball/bg3.jpg");
+     background-size: 100% auto;
+     font-size:20;
+     font-weight:bold;
+     color:#FF0000;
+    }
+    </style>  
+
+  </head>
+  <body>
+
+    <div style="position: absolute; top:10px; left:30px;">
+      <!--放ball的框架-->
+      <div id="dhtml" style="width:1780px; height:800px; border:3px orange dashed;">
+          <div id="dhtmlHost" class="host" onclick="">
+          <div id="dhtml_fps">-- fps</div>
+            <div id="0" style="width: 100px; height: 100px; ">
+              <div style="position: absolute; top:15px; left:3px; width:50px;">
+                <p align="center"></p>
+              </div>
+            <img src="./assets/ball/member/CN_LEE.jpg" alt="" style='border-radius:100px; width: 100px; height: 100px;' id="pic"></img>
+
+          </div>
+        </div>
+      </div>
+      <!--製造ball-->
+      <script language="JavaScript">
+/**
+* DHTML Balls test
+ * 
+ * @param {Object} N
+ */
+      function DHTMLTest(N) {
+        DHTMLTest.baseConstructor.call(this, N);
+      }
+extend(DHTMLTest, BallsTest);
+
+DHTMLTest.prototype.start = function(N) {
+  if (!DHTMLTest.base.start.call(this, N)) return;
+  this._saveContent = document.getElementById("dhtmlHost").innerHTML;
+
+  //下面是圖檔的來源
+  lines = [
+  "./assets/ball/member/0.png",
+  "./assets/ball/member/1.png",
+  "./assets/ball/member/2.png",
+  "./assets/ball/member/3.png",
+  "./assets/ball/member/5.png",
+  "./assets/ball/member/6.png",
+  "./assets/ball/member/7.png",
+  "./assets/ball/member/8.png",
+  "./assets/ball/member/9.png",
+  "./assets/ball/member/12.png",
+  "./assets/ball/member/13.png",
+  "./assets/ball/member/15.png",
+  "./assets/ball/member/17.png"
+  ];
+    this._ballsO[0] = new DHTMLBall("0");
+
+  for (var i=1; i<=13; i++) 
+  {
+      document.getElementById("pic").src = lines[i-1];
+      if(i===13)
+      {
+        break;
+      }
+      this._ballsO[i] = this._ballsO[0].clone(i);
+  }
+}
+DHTMLTest.prototype.stop = function(){
+  if (!DHTMLTest.base.stop.call(this)) return;
+  document.getElementById("dhtmlHost").innerHTML = this._saveContent;
+}
+DHTMLTest.prototype._showFPS = function(fps) {
+  document.getElementById("dhtml_fps").innerHTML = fps + " fps";
+}
+
+var _dhtmlTest = new DHTMLTest(15);
+
+function init() {
+  _dhtmlTest.start();
+}
+      </script>
+
+  <div id="ppp" style="width:300px; height:130px; border:thin black solid; float:right; text-align:center; line-height: 100px;border:3px orange dashed;"></div>
+  <div style="margin-top:1%">
+    <button type="button" class="btn btn-info" style="width:240px; height:50px;font-size:20pt;color:#CC0000;font-weight:bold;" onclick="$('#list').val('');_dhtmlTest.stop(); ClearLot();">我不管，這次不算</button>
+    <input id= "run" type="button" class="btn btn-warning" value="這程式跑得起來嗎？" style="width:260px; height:50px;font-size:20pt;color:#CC0000;font-weight:bold;" onclick="StartLot();">
+    <input type="button" id="doit" class="btn btn-danger" value="該我了吧？" style="width:200px; height:60px;font-size:28pt;color:#00DD00;font-weight:bold;" onclick="CheckPullOut();">
+  </div>
+    </div>
+  </body>
+</html>
